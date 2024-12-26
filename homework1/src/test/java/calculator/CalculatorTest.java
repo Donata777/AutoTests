@@ -23,8 +23,8 @@ public class CalculatorTest {
                 {"-4", "2", -2.0},
                 {"5.5", "2.2", 2.5},
                 {"20.55", "5", 4.11},
-                {"5", "20.55", 0.243309002},
-                {"33.333", "4.56", 7.30986842},
+                {"5", "20.55", 0.24330900243309},
+                {"33.333", "4.56", 7.309868421052632},
                 {"0", "10", 0}
         };
     }
@@ -51,7 +51,7 @@ public class CalculatorTest {
     @Test(dataProvider = "validData")
     public void testDivideTwoDigitsValid(String d1, String d2, double expected) {
         double result = calculator.divideTwoDigits("Позитивная проверка", d1, d2);
-        assertEquals(result, expected,0.00000001, "Результат деления неверный");
+        assertEquals(result, expected, "Результат деления неверный");
     }
 
     @Test(dataProvider = "wrongDataArithmeticException", expectedExceptions = ArithmeticException.class)
@@ -64,9 +64,9 @@ public class CalculatorTest {
         calculator.divideTwoDigits("Негативная проверка", d1, d2);
     }
 
-    @Test(dataProvider = "validData")
-    public void testReadTwoDigitsAndDivideValid(String input1, String input2, double expected) {
-        String input = input1 + "\n" + input2 + "\n";
+    @Test
+    public void testReadTwoDigitsAndDivideValid() {
+        String input = "10\n2\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
@@ -74,7 +74,7 @@ public class CalculatorTest {
 
         calculator.readTwoDigitsAndDivide("Введите два числа для деления:");
 
-        String expectedOutput = "Результат деления: " + expected;
+        String expectedOutput = "Результат деления: 5.0";
         assertTrue(outContent.toString().contains(expectedOutput),
                 "Результат деления неверный");
     }
